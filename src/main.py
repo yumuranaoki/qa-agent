@@ -17,9 +17,6 @@ async def __run(
     initial_url: str | None,
     language: str,
 ):
-    if not isinstance(allowed_domains, list):
-        raise ValueError("allowed_domains must be a list of strings")
-
     llm = initialize_model(provider=provider, model=model)
     execution_inputs = validate_input(uri=uri)
 
@@ -34,10 +31,8 @@ async def __run(
             )
             write(execution_result)
         except Exception as e:
-            logger.error(f"Unexpected error: {e}")
+            logger.error(f"Error: {e}")
             sys.exit(1)
-
-    sys.exit(0)
 
 
 if __name__ == "__main__":
@@ -67,5 +62,3 @@ if __name__ == "__main__":
             language=args.language,
         )
     )
-
-    sys.exit(0)

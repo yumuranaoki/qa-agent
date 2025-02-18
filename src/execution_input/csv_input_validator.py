@@ -1,5 +1,4 @@
 import csv
-import sys
 
 from execution_input.execution_input import ExecutionInput
 from logger import logger
@@ -12,4 +11,4 @@ def validate_input(uri):
             return [ExecutionInput.model_validate(row) for row in reader]
     except Exception as e:
         logger.error(f"Unexpected error parsing csv files: {e}")
-        sys.exit(1)
+        raise Exception from e

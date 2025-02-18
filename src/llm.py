@@ -1,5 +1,3 @@
-import sys
-
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
@@ -18,11 +16,13 @@ ALLOWED_PROVIDERS = {
 def initialize_model(provider: str, model: str):
     if provider not in ALLOWED_PROVIDERS:
         logger.error(f"Specified provider is not allowed: {provider}")
-        sys.exit(1)
+        raise ValueError(f"Allowed providers: {ALLOWED_PROVIDERS.keys()}")
 
     if model not in ALLOWED_PROVIDERS[provider]:
         logger.error(f"Specified model is not allowed: {model}")
-        sys.exit(1)
+        raise ValueError(
+            f"Allowed models for {provider}: {ALLOWED_PROVIDERS[provider]}"
+        )
 
     return __get_llm(provider, model)
 
